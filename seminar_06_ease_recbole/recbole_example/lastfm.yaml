@@ -1,0 +1,31 @@
+data_path: ..
+dataset: lastfm
+
+USER_ID_FIELD: user_id
+ITEM_ID_FIELD: artist_id
+RATING_FIELD: weight
+
+# model config
+embedding_size: 64
+
+load_col:
+    inter: [user_id, artist_id, weight]
+
+user_inter_num_interval: "[10,inf)"
+item_inter_num_interval: "[10,inf)"
+val_interval:
+    weight: "[100,inf)"
+
+eval_args:
+    group_by: user
+    order: RO
+    split: {'RS': [0.8,0.1,0.1]}
+    mode: full
+metrics: ['Recall', 'MRR', 'NDCG', 'Hit', 'Precision']
+topk: 10
+valid_metric: MRR@10
+metric_decimal_place: 4
+
+device: cpu
+seed: 42
+reproducibility: True
